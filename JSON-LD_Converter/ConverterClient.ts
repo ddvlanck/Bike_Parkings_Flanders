@@ -1,6 +1,7 @@
 import {DatasetAntwerpConverter} from "./DatasetAntwerpConverter";
 import {DatasetGhentConverter} from "./DatasetGhentConverter";
 import {JSONLDTemplate} from "./JSONLDTemplate";
+import * as fs from "fs";
 
 try {
 
@@ -17,6 +18,7 @@ try {
     const AntwerpKMLConverter = new DatasetAntwerpConverter('files/buurtparkings.kml');
     AntwerpKMLConverter.parse();
     AntwerpKMLConverter.createJSONLD();
+
 } finally {
 
 }

@@ -23,8 +23,10 @@ export class DatasetAntwerpConverter extends Converter{
 
     constructor(filename: string) {
         super();
-        const filePath = path.join(__dirname, filename);
-        this.fileData = fs.readFileSync(filePath, 'ascii');
+
+        //const filePath = path.join(__dirname, filename);
+
+        this.fileData = fs.readFileSync(filename, 'ascii');
     }
 
 
@@ -119,7 +121,8 @@ export class DatasetAntwerpConverter extends Converter{
                 "schema": "http://schema.org/",
                 "bp": "http://example.org/BikeProposal/",
                 "datex": "http://vocab.datex.org/terms#",
-                "dcterms": "http://purl.org/dc/terms/"
+                "dcterms": "http://purl.org/dc/terms/",
+                "foaf" : "http://xmlns.com/foaf/spec/"
             }
         };
 
@@ -131,7 +134,16 @@ export class DatasetAntwerpConverter extends Converter{
             doc["@graph"] = graph;
 
             jsonld.compact(doc, context, (err, compacted) => {
-                fs.writeFileSync('output/bikeparkingAntwerp.jsonld', JSON.stringify(compacted, null, 2));
+                const data = JSON.stringify(compacted, null, 2);
+
+                try {
+                    fs.accessSync('/output');
+                    fs.writeFileSync('./output/bikeparkingsAntwerp.jsonld', data);
+                } catch (e) {
+                    fs.mkdir('./output', () => {
+                        fs.writeFileSync('./output/bikeparkingsAntwerp.jsonld', data);
+                    })
+                }
             })
         })
 

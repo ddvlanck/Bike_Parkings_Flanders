@@ -21,8 +21,9 @@ export class DatasetGhentConverter extends Converter {
         super();
         SparqlHttp.fetch = fetch;
 
-        const filePath = path.join(__dirname, filename);
-        this.fileData = fs.readFileSync(filePath, 'ascii');
+        //const filePath = path.join(__dirname, filename);
+
+        this.fileData = fs.readFileSync(filename, 'ascii');
     }
 
     parse() {
@@ -177,7 +178,8 @@ export class DatasetGhentConverter extends Converter {
                 "bp": "http://example.org/BikeProposal/",
                 "datex": "http://vocab.datex.org/terms#",
                 "gvb": "http://example.org/GhentVocabulary/",
-                "dcterms": "http://purl.org/dc/terms/"
+                "dcterms": "http://purl.org/dc/terms/",
+                "foaf" : "http://xmlns.com/foaf/spec/"
             }
         };
 
@@ -189,11 +191,22 @@ export class DatasetGhentConverter extends Converter {
             doc['@graph'] = graph;
 
             jsonld.compact(doc, context, (err, compacted) => {
-                fs.writeFileSync('output/bikeparkingGhent.jsonld', JSON.stringify(compacted, null, 2));
+                const data = JSON.stringify(compacted, null, 2);
+
+                try {
+                    fs.accessSync('/output');
+                    fs.writeFileSync('./output/bikeparkingsGhent.jsonld', data);
+                } catch (e) {
+                    fs.mkdir('./output', () => {
+                        fs.writeFileSync('./output/bikeparkingsGhent.jsonld', data);
+                    })
+                }
             });
         }));
 
     }
+
+
 
     private findElement(array: any[], tagName: string): any {
         let element = array.filter(element => element.tag === tagName)[0];
