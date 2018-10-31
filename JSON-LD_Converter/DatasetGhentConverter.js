@@ -39,6 +39,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var JSONLDTemplate_1 = require("./JSONLDTemplate");
 var fs = require('fs');
 var xmlReader = require('read-xml');
 var path = require('path');
@@ -138,20 +139,70 @@ var DatasetGhentConverter = /** @class */ (function () {
         }
     };
     DatasetGhentConverter.prototype.createJSONLD = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var uri;
-            var _this = this;
+        var _this = this;
+        var graph = [];
+        Object.keys(this.parkingData).forEach(function (index) { return __awaiter(_this, void 0, void 0, function () {
+            var parkingArray, templateClass, parkingTemplate, street, publicAccess;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log('OPZOEKEN URI');
-                        return [4 /*yield*/, new Promise(function (resolve) { return _this.resolveAddress('Tolpoort', '9000', '2'); })];
-                    case 1:
-                        uri = _a.sent();
-                        console.log(uri);
-                        return [2 /*return*/];
+                parkingArray = this.parkingData[index];
+                templateClass = new JSONLDTemplate_1.JSONLDTemplate();
+                parkingTemplate = templateClass.getTemplate();
+                /*
+                *   Searching for the tags that we need in the template in the parkingArray
+                * */
+                parkingTemplate['dcterms:identifier'] = this.findElement(parkingArray, 'dcterms:identifier').value;
+                street = this.findElement(parkingArray, 'schema:streetAddress').value;
+                /*let houseNr: string = this.findElement(parkingArray, 'huisNR').value;
+                if(houseNr.indexOf('/') > 0){
+                    houseNr = houseNr.split('/')[0];
                 }
+    
+                let results: any = await new Promise(resolve => this.resolveAddress(street, '9000', houseNr)) ;
+                if(results.bindings.length > 0){
+                    parkingTemplate['schema:address']['@id'] = results.bindings[0].adr.value;
+                }*/
+                parkingTemplate['schema:address']['schema:addressCountry'] = this.findElement(parkingArray, 'schema:addressCountry').value;
+                ;
+                parkingTemplate['schema:address']['schema:postalCode'] = this.findElement(parkingArray, 'schema:postalCode').value || '9000';
+                parkingTemplate['schema:address']['schema:streetAddress'] = street + " " + this.findElement(parkingArray, 'huisNR').value;
+                parkingTemplate['schema:geo']['schema:latitude'] = this.findElement(parkingArray, 'schema:latitude').value;
+                parkingTemplate['schema:geo']['schema:longitude'] = this.findElement(parkingArray, 'schema:longitude').value;
+                publicAccess = this.findElement(parkingArray, 'schema:publicAccess').value;
+                if (publicAccess && publicAccess === 'Ja') {
+                    parkingTemplate['schema:publicAccess'] = 'true';
+                }
+                else {
+                    parkingTemplate['schema:publicAccess'] = 'false';
+                }
+                parkingTemplate['bp:state'] = this.findElement(parkingArray, 'bp:state').value;
+                parkingTemplate['schema:landlord'] = this.findElement(parkingArray, 'schema:landlord').value;
+                /* Get tags specifc for Ghent */
+                parkingTemplate['gvb:datetimeOfPlacement'] = this.findElement(parkingArray, 'gvb:datetimeOfPlacement').value;
+                parkingTemplate['gvb:surface'] = this.findElement(parkingArray, 'gvb:surface').value;
+                parkingTemplate['gvb:destination'] = this.findElement(parkingArray, 'gvb:destination').value;
+                parkingTemplate['gvb:datetimeOfApproval'] = this.findElement(parkingArray, 'gvb:datetimeOfApproval').value;
+                parkingTemplate['gvb:lastMaintenance'] = this.findElement(parkingArray, 'gvb:lastMaintenance').value;
+                parkingTemplate['gvb:dateOfRelocation'] = this.findElement(parkingArray, 'gvb:dateOfRelocation').value;
+                parkingTemplate['gvb:dateOfRemoval'] = this.findElement(parkingArray, 'gvb:dateOfRemoval').value;
+                templateClass.removeEmptyFields();
+                graph.push(parkingTemplate);
+                return [2 /*return*/];
             });
+        }); });
+        var context = {
+            "@context": {
+                "schema": "http://schema.org/",
+                "bp": "http://example.org/BikeProposal/",
+                "datex": "http://vocab.datex.org/terms#",
+                "gvb": "http://example.org/GhentVocabulary/",
+                "dcterms": "http://purl.org/dc/terms/"
+            }
+        };
+        var doc = {
+            "@graph": graph
+        };
+        jsonld.compact(doc, context, function (err, compacted) {
+            fs.writeFileSync('output/bikeparkingGhent.jsonld', JSON.stringify(compacted, null, 2));
         });
     };
     DatasetGhentConverter.prototype.findElement = function (array, tagName) {
