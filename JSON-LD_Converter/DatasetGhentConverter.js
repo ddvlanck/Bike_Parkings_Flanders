@@ -174,7 +174,7 @@ var DatasetGhentConverter = /** @class */ (function (_super) {
                             houseNr = houseNr.split('/')[0];
                         }
                         setTimeout(function () {
-                        }, 5000);
+                        }, 6000);
                         return [4 /*yield*/, this.resolveAddress(street, '9000', houseNr)];
                     case 1:
                         uri = _a.sent();
@@ -182,7 +182,7 @@ var DatasetGhentConverter = /** @class */ (function (_super) {
                             parkingTemplate['schema:address']['@id'] = uri.results.bindings[0].adr.value;
                         }
                         setTimeout(function () {
-                        }, 5000);
+                        }, 6000);
                         parkingTemplate['schema:address']['schema:addressCountry'] = this.findElement(parkingArray, 'schema:addressCountry').value;
                         ;
                         parkingTemplate['schema:address']['schema:postalCode'] = this.findElement(parkingArray, 'schema:postalCode').value || '9000';

@@ -121,7 +121,7 @@ export class DatasetGhentConverter extends Converter {
             }
 
             setTimeout(() => {
-            }, 5000);
+            }, 6000);
 
             let uri: any = await this.resolveAddress(street, '9000', houseNr);
 
@@ -131,7 +131,7 @@ export class DatasetGhentConverter extends Converter {
             }
 
             setTimeout(() => {
-            }, 5000);
+            }, 6000);
 
             parkingTemplate['schema:address']['schema:addressCountry'] = this.findElement(parkingArray, 'schema:addressCountry').value;
             ;
