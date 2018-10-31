@@ -30,26 +30,12 @@ export class JSONLDTemplate {
     private template = {
         "@type" : "schema:ParkingFacility",
         "@id" : "",
-
-        "schema:dateModified" : "",
-        "bp:dataOwner" : "",
-
-        "schema:photos" : [
-            {
-                "@type": "schema:ImageObject",
-                "schema:image" : ""
-            },
-            {
-                "@type" : "schema:ImageObject",
-                "schema:image" : ""
-            }
-        ],
-
-        "dcterms:identifier" : "",
         "schema:name" : "",
-        "schema:landlord" : "",
-        "bp:manager" : "",
-
+        "schema:description" : "",
+        "dcterms:identifier" : "",
+        "bp:vehicleType" : "",
+        "datex:numberOfVacantParkingSpaces" : "",
+        "datex:parkingNumberOfSpaces" : "",
         "schema:address" : {
             "@type" : "schema:PostalAddress",
             "@id" : "",
@@ -57,79 +43,26 @@ export class JSONLDTemplate {
             "schema:postalCode" : "",
             "schema:streetAddress" : ""
         },
-        "schema:geo" : [
-            {
-                "@type" : "schema:GeoCoordinates",
-                "schema:description" : "",
-                "schema:latitude" : "",
-                "schema:longitude" : ""
-            },
-            {
-                "@type" : "schema:GeoShape",
-                "schema:polygon" : ""
-            }
-        ],
-        "bp:entranceLocation" : {
+        "schema:geo" : {
             "@type" : "schema:GeoCoordinates",
-            "schema:description" : "",
             "schema:latitude" : "",
             "schema:longitude" : ""
         },
-        "foaf:based_near" : "",
-        "bp:numberOfFloors" : "",
-        "schema:map" : {
-            "@type" : "schema:URL",
-            "schema:url" : ""
-        },
+        "schema:publicAccess" : "",
+        "schema:isAccessibleForFree" : "",
+        "schema:price" : "",
 
-        "schema:startDate" : "",
-        "schema:endDate" : "",
         "schema:openingHours" : "",
-
+        "bp:state" : "",
         "schema:contactPoint" : {
             "@type" : "schema:ContactPoint",
             "schema:email" : "",
-            "schema:telephone" : "",
-            "schema:interactionService" : {
-                "@type" : "schema:WebSite",
-                "schema:url" : ""
-            }
+            "schema:telephone" : ""
         },
-
-        "bp:vehicleType" : "",
-        "bp:storageType" : "",
-        "bp:regulations" : "",
-
-        "bp:accessType" : "",
-        "bp:firstUse" : {
-            "@type" : "schema:WebSite",
-            "schema:url" : ""
-        },
-        "bp:securityMeasures" : "",
-        "bp:cameraSurveillance" : "",
-
-        "bp:maintenanceOperator" : "",
-
-        "schema:publicAccess" : "",
-        "schema:isAccessibleForFree" : "",
-        "schema:currency" : "",
-        "bp:unit" : "",
-        "schema:price" : "",
-        "bp:warrantyCost": "",
-        "bp:warrantyForKey" : "",
-
-        "datex:parkingNumberOfSpaces" : "",
-        "datex:numberOfVacantParkingSpace" : "",
-        "schema:amenityFeature": [
-            {
-                "@type" : "schema:LocationFeatureSpecification",
-                "schema:description" : "Pumps"
-            },
-            {
-                "@type" : "schema:LocationFeatureSpecification",
-                "schema:description" : "Bicycle repair"
-            }
-        ]
-
+        "schema:landlord" : "",
+        "bp:manager" : {
+            "@type" : "schema:Organization",
+            "schema:name" : ""
+        }
     };
 }
