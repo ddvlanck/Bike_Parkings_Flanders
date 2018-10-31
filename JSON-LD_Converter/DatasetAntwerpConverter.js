@@ -173,6 +173,10 @@ var DatasetAntwerpConverter = /** @class */ (function () {
         }
         return element;
     };
+    DatasetAntwerpConverter.prototype.createGraph = function (callback) {
+    };
+    DatasetAntwerpConverter.prototype.resolveAddress = function (streetaddress, postalCode, houseNumber) {
+    };
     return DatasetAntwerpConverter;
 }());
 exports.DatasetAntwerpConverter = DatasetAntwerpConverter;

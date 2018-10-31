@@ -1,12 +1,15 @@
 import {IConverter} from "./IConverter";
 import {JSONLDTemplate} from "./JSONLDTemplate";
+import {isNumber} from "util";
 
 const fs = require('fs');
 const xmlReader = require('read-xml');
 const path = require('path');
 const xml2js = require('xml2js');
 const jsonld = require('jsonld');
-const {SparqlClient, SPARQL} = require('sparql-client-2');
+const fetch = require('isomorphic-fetch');
+const SparqlHttp = require('sparql-http-client');
+
 
 export class DatasetGhentConverter implements IConverter {
     private fileData: string;
@@ -14,7 +17,13 @@ export class DatasetGhentConverter implements IConverter {
     private parkingData: { [key: string]: Array<any> } = {};
     private currentID: string;
 
+    private endpoint: any;
+
     constructor(filename: string) {
+        SparqlHttp.fetch = fetch;
+        this.endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/'});
+
+
         const filePath = path.join(__dirname, filename);
         this.fileData = fs.readFileSync(filePath, 'ascii');
     }
@@ -22,7 +31,6 @@ export class DatasetGhentConverter implements IConverter {
     parse() {
         //let res: any = await this.resolveAddress('Koningin Maria Hendrikaplein', '9000', '70');
         //console.log(res.bindings.length);
-
         const parser = new xml2js.Parser();
         parser.parseString(this.fileData.substring(0, this.fileData.length), (err, res) => {
             if (err) {
@@ -96,7 +104,7 @@ export class DatasetGhentConverter implements IConverter {
         }
     }
 
-    createJSONLD() {
+    createGraph(callback: (graph) => void) {
         let graph = [];
         Object.keys(this.parkingData).forEach(async (index) => {
             const parkingArray = this.parkingData[index];
@@ -110,16 +118,23 @@ export class DatasetGhentConverter implements IConverter {
 
             // Data we need to get the URI of the address
             const street = this.findElement(parkingArray, 'schema:streetAddress').value;
-            /*let houseNr: string = this.findElement(parkingArray, 'huisNR').value;
-            if(houseNr.indexOf('/') > 0){
+            let houseNr: string = this.findElement(parkingArray, 'huisNR').value;
+            if (houseNr.indexOf('/') > 0) {
                 houseNr = houseNr.split('/')[0];
             }
 
-            let results: any = await new Promise(resolve => this.resolveAddress(street, '9000', houseNr)) ;
-            if(results.bindings.length > 0){
-                parkingTemplate['schema:address']['@id'] = results.bindings[0].adr.value;
-            }*/
+            setTimeout(() => {
+            }, 5000);
 
+            let uri: any = await this.resolveAddress(street, '9000', houseNr);
+
+
+            if (uri.results.bindings && uri.results.bindings.length > 0) {
+                parkingTemplate['schema:address']['@id'] = uri.results.bindings[0].adr.value;
+            }
+
+            setTimeout(() => {
+            }, 5000);
 
             parkingTemplate['schema:address']['schema:addressCountry'] = this.findElement(parkingArray, 'schema:addressCountry').value;
             ;
@@ -151,9 +166,17 @@ export class DatasetGhentConverter implements IConverter {
 
             graph.push(parkingTemplate);
 
-        });
+            if(graph.length == Object.keys(this.parkingData).length){
+                callback(graph);
+            }
 
-        let context = {
+
+
+        });
+    }
+
+    createJSONLD() {
+        const context = {
             "@context": {
                 "schema": "http://schema.org/",
                 "bp": "http://example.org/BikeProposal/",
@@ -164,12 +187,23 @@ export class DatasetGhentConverter implements IConverter {
         };
 
         let doc = {
-            "@graph": graph
+            "@graph": ""
         }
 
-        jsonld.compact(doc, context, (err, compacted) => {
-            fs.writeFileSync('output/bikeparkingGhent.jsonld', JSON.stringify(compacted, null, 2));
-        })
+        this.createGraph( (graph => {
+            doc['@graph'] = graph;
+
+            jsonld.compact(doc, context, (err, compacted) => {
+                fs.writeFileSync('output/bikeparkingGhent.jsonld', JSON.stringify(compacted, null, 2));
+            });
+        }));
+
+
+
+
+
+
+
     }
 
     private findElement(array: any[], tagName: string): any {
@@ -180,29 +214,33 @@ export class DatasetGhentConverter implements IConverter {
         return element;
     }
 
-    public resolveAddress(streetaddress: string, postalCode: string, houseNumber: string) {
-        return new Promise(resolve => {
-            const client = new SparqlClient('https://data.vlaanderen.be/sparql');
-            client.query(SPARQL`PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                            PREFIX adres: <http://data.vlaanderen.be/ns/adres#>
+    public async resolveAddress(streetaddress: string, postalCode: string, houseNumber: string) {
+        let query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
+            'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
+            'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
+            '\n' +
+            ' SELECT distinct ?adr WHERE {\n' +
+            '  ?adr a adres:Adres;\n' +
+            '       adres:heeftStraatnaam ?str;\n' +
+            '       adres:heeftPostinfo ?post.\n' +
+            '  ?str rdfs:label ?strLabel.\n' +
+            '  filter(STRSTARTS(str(?strLabel),"' + streetaddress + '")).\n' +
+            '  ?post adres:postcode "' + postalCode + '".\n' +
+            '  ?adr adres:huisnummer "' + houseNumber + '".\n' +
+            ' } \n' +
+            ' LIMIT 20';
 
-                            SELECT distinct ?adr WHERE {
-                                   ?adr a adres:Adres;
-                                        adres:heeftStraatnaam ?str;
-                                        adres:heeftPostinfo ?post.
-                                   ?str rdfs:label ?strLabel.
-                                   filter(STRSTARTS(str(?strLabel)," + streetaddress + ")).
-                                   ?post adres:postcode " + postalCode + ".
-                                   ?adr adres:huisnummer " + houseNumber + " .
-                            }
-                            LIMIT 20`
-            ).execute().then(response => {
-                resolve(response.results);
-            }, (err) => {
-                console.log('' + err);
+        let result = await new Promise(resolve => {
+            this.endpoint.selectQuery(query).then((res) => {
+                return res.text();
+            }).then(body => {
+                const result = JSON.parse(body);
+                resolve(result);
+            }).catch(err => {
+                console.log(err);
             })
         });
+        return result;
     }
 
 }

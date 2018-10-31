@@ -1,8 +1,4 @@
 "use strict";
-var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
-    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-    return cooked;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -45,17 +41,20 @@ var xmlReader = require('read-xml');
 var path = require('path');
 var xml2js = require('xml2js');
 var jsonld = require('jsonld');
-var _a = require('sparql-client-2'), SparqlClient = _a.SparqlClient, SPARQL = _a.SPARQL;
+var fetch = require('isomorphic-fetch');
+var SparqlHttp = require('sparql-http-client');
 var DatasetGhentConverter = /** @class */ (function () {
     function DatasetGhentConverter(filename) {
         this.parkingData = {};
+        SparqlHttp.fetch = fetch;
+        this.endpoint = new SparqlHttp({ endpointUrl: 'https://data.vlaanderen.be/sparql/' });
         var filePath = path.join(__dirname, filename);
         this.fileData = fs.readFileSync(filePath, 'ascii');
     }
     DatasetGhentConverter.prototype.parse = function () {
+        var _this = this;
         //let res: any = await this.resolveAddress('Koningin Maria Hendrikaplein', '9000', '70');
         //console.log(res.bindings.length);
-        var _this = this;
         var parser = new xml2js.Parser();
         parser.parseString(this.fileData.substring(0, this.fileData.length), function (err, res) {
             if (err) {
@@ -138,57 +137,70 @@ var DatasetGhentConverter = /** @class */ (function () {
             this.parkingData[this.currentID].push({ tag: 'gvb:dateOfRemoval', value: tagValue });
         }
     };
-    DatasetGhentConverter.prototype.createJSONLD = function () {
+    DatasetGhentConverter.prototype.createGraph = function (callback) {
         var _this = this;
         var graph = [];
         Object.keys(this.parkingData).forEach(function (index) { return __awaiter(_this, void 0, void 0, function () {
-            var parkingArray, templateClass, parkingTemplate, street, publicAccess;
+            var parkingArray, templateClass, parkingTemplate, street, houseNr, uri, publicAccess;
             return __generator(this, function (_a) {
-                parkingArray = this.parkingData[index];
-                templateClass = new JSONLDTemplate_1.JSONLDTemplate();
-                parkingTemplate = templateClass.getTemplate();
-                /*
-                *   Searching for the tags that we need in the template in the parkingArray
-                * */
-                parkingTemplate['dcterms:identifier'] = this.findElement(parkingArray, 'dcterms:identifier').value;
-                street = this.findElement(parkingArray, 'schema:streetAddress').value;
-                /*let houseNr: string = this.findElement(parkingArray, 'huisNR').value;
-                if(houseNr.indexOf('/') > 0){
-                    houseNr = houseNr.split('/')[0];
+                switch (_a.label) {
+                    case 0:
+                        parkingArray = this.parkingData[index];
+                        templateClass = new JSONLDTemplate_1.JSONLDTemplate();
+                        parkingTemplate = templateClass.getTemplate();
+                        /*
+                        *   Searching for the tags that we need in the template in the parkingArray
+                        * */
+                        parkingTemplate['dcterms:identifier'] = this.findElement(parkingArray, 'dcterms:identifier').value;
+                        street = this.findElement(parkingArray, 'schema:streetAddress').value;
+                        houseNr = this.findElement(parkingArray, 'huisNR').value;
+                        if (houseNr.indexOf('/') > 0) {
+                            houseNr = houseNr.split('/')[0];
+                        }
+                        setTimeout(function () {
+                        }, 5000);
+                        return [4 /*yield*/, this.resolveAddress(street, '9000', houseNr)];
+                    case 1:
+                        uri = _a.sent();
+                        if (uri.results.bindings && uri.results.bindings.length > 0) {
+                            parkingTemplate['schema:address']['@id'] = uri.results.bindings[0].adr.value;
+                        }
+                        setTimeout(function () {
+                        }, 5000);
+                        parkingTemplate['schema:address']['schema:addressCountry'] = this.findElement(parkingArray, 'schema:addressCountry').value;
+                        ;
+                        parkingTemplate['schema:address']['schema:postalCode'] = this.findElement(parkingArray, 'schema:postalCode').value || '9000';
+                        parkingTemplate['schema:address']['schema:streetAddress'] = street + " " + this.findElement(parkingArray, 'huisNR').value;
+                        parkingTemplate['schema:geo']['schema:latitude'] = this.findElement(parkingArray, 'schema:latitude').value;
+                        parkingTemplate['schema:geo']['schema:longitude'] = this.findElement(parkingArray, 'schema:longitude').value;
+                        publicAccess = this.findElement(parkingArray, 'schema:publicAccess').value;
+                        if (publicAccess && publicAccess === 'Ja') {
+                            parkingTemplate['schema:publicAccess'] = 'true';
+                        }
+                        else {
+                            parkingTemplate['schema:publicAccess'] = 'false';
+                        }
+                        parkingTemplate['bp:state'] = this.findElement(parkingArray, 'bp:state').value;
+                        parkingTemplate['schema:landlord'] = this.findElement(parkingArray, 'schema:landlord').value;
+                        /* Get tags specifc for Ghent */
+                        parkingTemplate['gvb:datetimeOfPlacement'] = this.findElement(parkingArray, 'gvb:datetimeOfPlacement').value;
+                        parkingTemplate['gvb:surface'] = this.findElement(parkingArray, 'gvb:surface').value;
+                        parkingTemplate['gvb:destination'] = this.findElement(parkingArray, 'gvb:destination').value;
+                        parkingTemplate['gvb:datetimeOfApproval'] = this.findElement(parkingArray, 'gvb:datetimeOfApproval').value;
+                        parkingTemplate['gvb:lastMaintenance'] = this.findElement(parkingArray, 'gvb:lastMaintenance').value;
+                        parkingTemplate['gvb:dateOfRelocation'] = this.findElement(parkingArray, 'gvb:dateOfRelocation').value;
+                        parkingTemplate['gvb:dateOfRemoval'] = this.findElement(parkingArray, 'gvb:dateOfRemoval').value;
+                        templateClass.removeEmptyFields();
+                        graph.push(parkingTemplate);
+                        if (graph.length == Object.keys(this.parkingData).length) {
+                            callback(graph);
+                        }
+                        return [2 /*return*/];
                 }
-    
-                let results: any = await new Promise(resolve => this.resolveAddress(street, '9000', houseNr)) ;
-                if(results.bindings.length > 0){
-                    parkingTemplate['schema:address']['@id'] = results.bindings[0].adr.value;
-                }*/
-                parkingTemplate['schema:address']['schema:addressCountry'] = this.findElement(parkingArray, 'schema:addressCountry').value;
-                ;
-                parkingTemplate['schema:address']['schema:postalCode'] = this.findElement(parkingArray, 'schema:postalCode').value || '9000';
-                parkingTemplate['schema:address']['schema:streetAddress'] = street + " " + this.findElement(parkingArray, 'huisNR').value;
-                parkingTemplate['schema:geo']['schema:latitude'] = this.findElement(parkingArray, 'schema:latitude').value;
-                parkingTemplate['schema:geo']['schema:longitude'] = this.findElement(parkingArray, 'schema:longitude').value;
-                publicAccess = this.findElement(parkingArray, 'schema:publicAccess').value;
-                if (publicAccess && publicAccess === 'Ja') {
-                    parkingTemplate['schema:publicAccess'] = 'true';
-                }
-                else {
-                    parkingTemplate['schema:publicAccess'] = 'false';
-                }
-                parkingTemplate['bp:state'] = this.findElement(parkingArray, 'bp:state').value;
-                parkingTemplate['schema:landlord'] = this.findElement(parkingArray, 'schema:landlord').value;
-                /* Get tags specifc for Ghent */
-                parkingTemplate['gvb:datetimeOfPlacement'] = this.findElement(parkingArray, 'gvb:datetimeOfPlacement').value;
-                parkingTemplate['gvb:surface'] = this.findElement(parkingArray, 'gvb:surface').value;
-                parkingTemplate['gvb:destination'] = this.findElement(parkingArray, 'gvb:destination').value;
-                parkingTemplate['gvb:datetimeOfApproval'] = this.findElement(parkingArray, 'gvb:datetimeOfApproval').value;
-                parkingTemplate['gvb:lastMaintenance'] = this.findElement(parkingArray, 'gvb:lastMaintenance').value;
-                parkingTemplate['gvb:dateOfRelocation'] = this.findElement(parkingArray, 'gvb:dateOfRelocation').value;
-                parkingTemplate['gvb:dateOfRemoval'] = this.findElement(parkingArray, 'gvb:dateOfRemoval').value;
-                templateClass.removeEmptyFields();
-                graph.push(parkingTemplate);
-                return [2 /*return*/];
             });
         }); });
+    };
+    DatasetGhentConverter.prototype.createJSONLD = function () {
         var context = {
             "@context": {
                 "schema": "http://schema.org/",
@@ -199,11 +211,14 @@ var DatasetGhentConverter = /** @class */ (function () {
             }
         };
         var doc = {
-            "@graph": graph
+            "@graph": ""
         };
-        jsonld.compact(doc, context, function (err, compacted) {
-            fs.writeFileSync('output/bikeparkingGhent.jsonld', JSON.stringify(compacted, null, 2));
-        });
+        this.createGraph((function (graph) {
+            doc['@graph'] = graph;
+            jsonld.compact(doc, context, function (err, compacted) {
+                fs.writeFileSync('output/bikeparkingGhent.jsonld', JSON.stringify(compacted, null, 2));
+            });
+        }));
     };
     DatasetGhentConverter.prototype.findElement = function (array, tagName) {
         var element = array.filter(function (element) { return element.tag === tagName; })[0];
@@ -213,16 +228,43 @@ var DatasetGhentConverter = /** @class */ (function () {
         return element;
     };
     DatasetGhentConverter.prototype.resolveAddress = function (streetaddress, postalCode, houseNumber) {
-        return new Promise(function (resolve) {
-            var client = new SparqlClient('https://data.vlaanderen.be/sparql');
-            client.query(SPARQL(templateObject_1 || (templateObject_1 = __makeTemplateObject(["PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n                            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n                            PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n\n                            SELECT distinct ?adr WHERE {\n                                   ?adr a adres:Adres;\n                                        adres:heeftStraatnaam ?str;\n                                        adres:heeftPostinfo ?post.\n                                   ?str rdfs:label ?strLabel.\n                                   filter(STRSTARTS(str(?strLabel),\" + streetaddress + \")).\n                                   ?post adres:postcode \" + postalCode + \".\n                                   ?adr adres:huisnummer \" + houseNumber + \" .\n                            }\n                            LIMIT 20"], ["PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n                            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n                            PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n\n                            SELECT distinct ?adr WHERE {\n                                   ?adr a adres:Adres;\n                                        adres:heeftStraatnaam ?str;\n                                        adres:heeftPostinfo ?post.\n                                   ?str rdfs:label ?strLabel.\n                                   filter(STRSTARTS(str(?strLabel),\" + streetaddress + \")).\n                                   ?post adres:postcode \" + postalCode + \".\n                                   ?adr adres:huisnummer \" + houseNumber + \" .\n                            }\n                            LIMIT 20"])))).execute().then(function (response) {
-                resolve(response.results);
-            }, function (err) {
-                console.log('' + err);
+        return __awaiter(this, void 0, void 0, function () {
+            var query, result;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
+                            'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
+                            'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
+                            '\n' +
+                            ' SELECT distinct ?adr WHERE {\n' +
+                            '  ?adr a adres:Adres;\n' +
+                            '       adres:heeftStraatnaam ?str;\n' +
+                            '       adres:heeftPostinfo ?post.\n' +
+                            '  ?str rdfs:label ?strLabel.\n' +
+                            '  filter(STRSTARTS(str(?strLabel),"' + streetaddress + '")).\n' +
+                            '  ?post adres:postcode "' + postalCode + '".\n' +
+                            '  ?adr adres:huisnummer "' + houseNumber + '".\n' +
+                            ' } \n' +
+                            ' LIMIT 20';
+                        return [4 /*yield*/, new Promise(function (resolve) {
+                                _this.endpoint.selectQuery(query).then(function (res) {
+                                    return res.text();
+                                }).then(function (body) {
+                                    var result = JSON.parse(body);
+                                    resolve(result);
+                                }).catch(function (err) {
+                                    console.log(err);
+                                });
+                            })];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, result];
+                }
             });
         });
     };
     return DatasetGhentConverter;
 }());
 exports.DatasetGhentConverter = DatasetGhentConverter;
-var templateObject_1;

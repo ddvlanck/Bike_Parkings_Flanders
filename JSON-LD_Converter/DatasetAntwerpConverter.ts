@@ -193,6 +193,12 @@ export class DatasetAntwerpConverter implements IConverter {
         return element;
     }
 
+    createGraph(callback: (graph) => void) {
+    }
+
+    resolveAddress(streetaddress: string, postalCode: string, houseNumber: string) {
+    }
+
 
 
 }
