@@ -1,10 +1,14 @@
 import {IConverter} from "./IConverter";
 import {JSONLDTemplate} from "./JSONLDTemplate";
+
 const fs = require('fs');
 const xmlReader = require('read-xml');
 const path = require('path');
 const xml2js = require('xml2js');
 const jsonld = require('jsonld');
+const fetch = require('isomorphic-fetch');
+const SparqlHttp = require('sparql-http-client');
+
 
 export class DatasetAntwerpConverter implements IConverter {
     private fileData: string;
@@ -16,8 +20,12 @@ export class DatasetAntwerpConverter implements IConverter {
     private parkingData: { [key: string]: Array<any> } = {};
     private currentID: string;
 
+    private endpoint: any;
 
-    constructor(filename: string){
+    constructor(filename: string) {
+        SparqlHttp.fetch = fetch;
+        this.endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/'});
+
         const filePath = path.join(__dirname, filename);
         this.fileData = fs.readFileSync(filePath, 'ascii');
     }
@@ -27,13 +35,13 @@ export class DatasetAntwerpConverter implements IConverter {
         const parser = new xml2js.Parser();
         parser.parseString(this.fileData.substring(0, this.fileData.length), (err, res) => {
             const data = res.kml.Document[0].Folder[0].Placemark;
-            Object.keys(data).forEach( (index) => {
+            Object.keys(data).forEach((index) => {
                 //Tags
                 const parkingData = data[index].ExtendedData[0].SchemaData[0].SimpleData;
-                Object.keys(parkingData).forEach( (parkingIndex) => {
+                Object.keys(parkingData).forEach((parkingIndex) => {
                     const tagValue = parkingData[parkingIndex]['_'];
                     const tagName = parkingData[parkingIndex]['$'].name;
-                    if(tagName === 'OBJECTID'){
+                    if (tagName === 'OBJECTID') {
                         this.parkingData[tagValue] = [];
                         this.currentID = tagValue;
                         this.parkingData[this.currentID].push({tag: 'dcterms:identifier', value: tagValue});
@@ -53,64 +61,91 @@ export class DatasetAntwerpConverter implements IConverter {
     * Change the tags for other documents
     * */
     public onTag(tagName: string, tagValue: string) {
-        if(tagName === 'Max_Auto'){
-            if(!this.parkingData[this.currentID]['types']){
+        if (tagName === 'Max_Auto') {
+            if (!this.parkingData[this.currentID]['types']) {
                 this.parkingData[this.currentID]['types'] = [];
             }
             this.parkingData[this.currentID]['types'].push('Auto');
             this.parkingData[this.currentID].push({tag: 'maxAuto', value: tagValue});
-        } else if(tagName === 'Max_Fiets') {
+        } else if (tagName === 'Max_Fiets') {
             if (!this.parkingData[this.currentID]['types']) {
                 this.parkingData[this.currentID]['types'] = [];
             }
             this.parkingData[this.currentID]['types'].push('Fiets');
             this.parkingData[this.currentID].push({tag: 'maxFiets', value: tagValue});
-        } else if(tagName === 'Max_Motor'){
+        } else if (tagName === 'Max_Motor') {
             if (!this.parkingData[this.currentID]['types']) {
                 this.parkingData[this.currentID]['types'] = [];
             }
             this.parkingData[this.currentID]['types'].push('Motor');
             this.parkingData[this.currentID].push({tag: 'maxMotor', value: tagValue});
 
-        } else if(tagName === 'Link'){
+        } else if (tagName === 'Link') {
             this.parkingData[this.currentID].push({tag: '@id', value: tagValue});
 
-        } else if(tagName === 'District'){
+        } else if (tagName === 'District') {
             this.parkingData[this.currentID].push({tag: 'schema:addressCountry', value: tagValue});
 
-        } else if(tagName === 'Postcode'){
+        } else if (tagName === 'Postcode') {
             this.parkingData[this.currentID].push({tag: 'schema:postalCode', value: tagValue});
 
-        } else if(tagName === 'Straat'){
+        } else if (tagName === 'Straat') {
             this.parkingData[this.currentID].push({tag: 'schema:streetAddress', value: tagValue});
 
-        } else if(tagName === 'Openbaar'){
+        } else if (tagName === 'Openbaar') {
             this.parkingData[this.currentID].push({tag: 'schema:publicAccess', value: tagValue});
 
-        } else if(tagName === 'GEBRUIK'){
+        } else if (tagName === 'GEBRUIK') {
             this.parkingData[this.currentID].push({tag: 'bp:state', value: tagValue});
 
-        } else if(tagName === 'Email'){
+        } else if (tagName === 'Email') {
             this.parkingData[this.currentID].push({tag: 'schema:email', value: tagValue});
 
-        } else if(tagName === 'Telefoon'){
+        } else if (tagName === 'Telefoon') {
             this.parkingData[this.currentID].push({tag: 'schema:telephone', value: tagValue});
 
-        } else if(tagName === 'NAAM'){
-            this.parkingData[this.currentID].push({tag : 'schema:name', value: tagValue});
+        } else if (tagName === 'NAAM') {
+            this.parkingData[this.currentID].push({tag: 'schema:name', value: tagValue});
 
-        } else if(tagName === 'Eigenaar'){
+        } else if (tagName === 'Eigenaar') {
             this.parkingData[this.currentID].push({tag: 'schema:landlord', value: tagValue});
 
-        } else if(tagName === 'Uitbater'){
-            this.parkingData[this.currentID].push({tag : 'manager', value: tagValue});
+        } else if (tagName === 'Uitbater') {
+            this.parkingData[this.currentID].push({tag: 'manager', value: tagValue});
         }
 
     }
 
     public createJSONLD() {
+        let context = {
+            "@context": {
+                "schema": "http://schema.org/",
+                "bp": "http://example.org/BikeProposal/",
+                "datex": "http://vocab.datex.org/terms#",
+                "dcterms": "http://purl.org/dc/terms/"
+            }
+        };
+
+        let doc = {
+            "@graph": ""
+        }
+
+        this.createGraph((graph) => {
+            doc["@graph"] = graph;
+
+            jsonld.compact(doc, context, (err, compacted) => {
+                fs.writeFileSync('output/bikeparkingAntwerp.jsonld', JSON.stringify(compacted, null, 2));
+            })
+        })
+
+
+    }
+
+    public createGraph(callback: (graph) => void) {
         let graph = [];
-        Object.keys(this.parkingData).forEach( (index) => {
+        let counter = 0;    // We have to use a counter here, because sometimes multiple instance of 1 parking will be created
+                            // according to the allowed vehicles
+        Object.keys(this.parkingData).forEach(async (index) => {
             const parkingArray = this.parkingData[index];
             const templateClass = new JSONLDTemplate();
             let parkingTemplate = templateClass.getTemplate();
@@ -122,14 +157,41 @@ export class DatasetAntwerpConverter implements IConverter {
             parkingTemplate['schema:name'] = this.findElement(parkingArray, 'schema:name').value;
             parkingTemplate['schema:description'] = this.findElement(parkingArray, 'schema:description').value;
             parkingTemplate['dcterms:identifier'] = this.findElement(parkingArray, 'dcterms:identifier').value;
+
+
+            const streetAddress = this.findElement(parkingArray, 'schema:streetAddress').value;
+            const postalCode = this.findElement(parkingArray, 'schema:postalCode').value;
+            let street;
+            let houseNr;
+            if (streetAddress.split(' ').length == 2) {
+                street = streetAddress.split(' ')[0];
+                houseNr = streetAddress.split(' ')[1];
+            } else {
+                street = streetAddress;
+                houseNr = 1;
+            }
+
             parkingTemplate['schema:address']['schema:addressCountry'] = this.findElement(parkingArray, 'schema:addressCountry').value;
-            parkingTemplate['schema:address']['schema:postalCode'] = this.findElement(parkingArray, 'schema:postalCode').value;
-            parkingTemplate['schema:address']['schema:streetAddress'] = this.findElement(parkingArray, 'schema:streetAddress').value;
+            parkingTemplate['schema:address']['schema:postalCode'] = postalCode;
+            parkingTemplate['schema:address']['schema:streetAddress'] = streetAddress;
+
+            setTimeout(() => {
+            }, 5000);
+
+            let uri: any = await this.resolveAddress(street, postalCode, houseNr);
+
+            if (uri.results.bindings && uri.results.bindings.length > 0) {
+                parkingTemplate['schema:address']['@id'] = uri.results.bindings[0].adr.value;
+            }
+
+            setTimeout(() => {
+            }, 5000);
+
             parkingTemplate['schema:geo']['schema:latitude'] = this.findElement(parkingArray, 'schema:latitude').value;
             parkingTemplate['schema:geo']['schema:longitude'] = this.findElement(parkingArray, 'schema:longitude').value;
 
-            const publicAccess =  this.findElement(parkingArray, 'schema:publicAccess').value;
-            if(publicAccess && publicAccess === 'Ja'){
+            const publicAccess = this.findElement(parkingArray, 'schema:publicAccess').value;
+            if (publicAccess && publicAccess === 'Ja') {
                 parkingTemplate['schema:publicAccess'] = 'true';
             } else {
                 parkingTemplate['schema:publicAccess'] = 'false';
@@ -141,19 +203,19 @@ export class DatasetAntwerpConverter implements IConverter {
             parkingTemplate['schema:landlord'] = this.findElement(parkingArray, 'schema:landlord').value;
             parkingTemplate['bp:manager']['schema:name'] = this.findElement(parkingArray, 'manager').value;
 
-            Object.keys(parkingArray['types']).forEach( (index) => {
+            Object.keys(parkingArray['types']).forEach((index) => {
                 const type = parkingArray['types'][index];
                 parkingTemplate['datex:parkingNumberOfSpaces'] = this.findElement(parkingArray, 'max' + type).value;
 
-                if(type === 'Auto'){
+                if (type === 'Auto') {
                     parkingTemplate['bp:vehicleType'] = 'schema:Car';
                 }
 
-                if(type === 'Fiets'){
+                if (type === 'Fiets') {
                     parkingTemplate['bp:vehicleType'] = "bp:Bicycle";
                 }
 
-                if(type === 'Motor'){
+                if (type === 'Motor') {
                     parkingTemplate['bp:vehicleType'] = "schema:MotorCycle";
                 }
 
@@ -164,41 +226,50 @@ export class DatasetAntwerpConverter implements IConverter {
 
                 graph.push(copy);
             });
-        });
+            counter++;
 
-        let context = {
-            "@context" : {
-                "schema" : "http://schema.org/",
-                "bp" : "http://example.org/BikeProposal/",
-                "datex": "http://vocab.datex.org/terms#",
-                "dcterms" : "http://purl.org/dc/terms/"
+            if (counter == Object.keys(this.parkingData).length) {
+                callback(graph);
             }
-        };
-
-        let doc = {
-            "@graph" : graph
-        }
-
-        jsonld.compact(doc, context, (err, compacted) => {
-            fs.writeFileSync('output/bikeparkingAntwerp.jsonld', JSON.stringify(compacted, null, 2));
-        })
+        });
     }
 
+    public async resolveAddress(streetaddress: string, postalCode: string, houseNumber: string) {
+        let query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
+            'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
+            'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
+            '\n' +
+            ' SELECT distinct ?adr WHERE {\n' +
+            '  ?adr a adres:Adres;\n' +
+            '       adres:heeftStraatnaam ?str;\n' +
+            '       adres:heeftPostinfo ?post.\n' +
+            '  ?str rdfs:label ?strLabel.\n' +
+            '  filter(STRSTARTS(str(?strLabel),"' + streetaddress + '")).\n' +
+            '  ?post adres:postcode "' + postalCode + '".\n' +
+            '  ?adr adres:huisnummer "' + houseNumber + '".\n' +
+            ' } \n' +
+            ' LIMIT 20';
+
+        let result = await new Promise(resolve => {
+            this.endpoint.selectQuery(query).then((res) => {
+                return res.text();
+            }).then(body => {
+                const result = JSON.parse(body);
+                resolve(result);
+            }).catch(err => {
+                console.log(err);
+            })
+        });
+        return result;
+    }
 
     private findElement(array: any[], tagName: string): any {
-        let element = array.filter( element => element.tag === tagName)[0];
-        if(element === undefined){
+        let element = array.filter(element => element.tag === tagName)[0];
+        if (element === undefined) {
             element = {tag: tagName, value: ""};
         }
         return element;
     }
-
-    createGraph(callback: (graph) => void) {
-    }
-
-    resolveAddress(streetaddress: string, postalCode: string, houseNumber: string) {
-    }
-
 
 
 }

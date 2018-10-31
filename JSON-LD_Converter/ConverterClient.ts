@@ -9,14 +9,14 @@ try {
     // 2. Use sparql to get an URI for the streetaddress
 
     //Ghent
-    const GhentKMLConverter = new DatasetGhentConverter("files/Fietsenstallingen.kml");
+    /*const GhentKMLConverter = new DatasetGhentConverter("files/Fietsenstallingen.kml");
     GhentKMLConverter.parse();
-    GhentKMLConverter.createJSONLD();
+    GhentKMLConverter.createJSONLD();*/
 
     //Antwerp
-    /*const AntwerpKMLConverter = new DatasetAntwerpConverter('files/buurtparkings.kml');
+    const AntwerpKMLConverter = new DatasetAntwerpConverter('files/buurtparkings.kml');
     AntwerpKMLConverter.parse();
-    AntwerpKMLConverter.createJSONLD();*/
+    AntwerpKMLConverter.createJSONLD();
 } finally {
 
 }
