@@ -1,6 +1,5 @@
 import {IConverter} from "./IConverter";
 import {JSONLDTemplate} from "./JSONLDTemplate";
-import {isNumber} from "util";
 
 const fs = require('fs');
 const xmlReader = require('read-xml');
@@ -22,7 +21,6 @@ export class DatasetGhentConverter implements IConverter {
     constructor(filename: string) {
         SparqlHttp.fetch = fetch;
         this.endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/'});
-
 
         const filePath = path.join(__dirname, filename);
         this.fileData = fs.readFileSync(filePath, 'ascii');
@@ -170,8 +168,6 @@ export class DatasetGhentConverter implements IConverter {
                 callback(graph);
             }
 
-
-
         });
     }
 
@@ -197,12 +193,6 @@ export class DatasetGhentConverter implements IConverter {
                 fs.writeFileSync('output/bikeparkingGhent.jsonld', JSON.stringify(compacted, null, 2));
             });
         }));
-
-
-
-
-
-
 
     }
 
