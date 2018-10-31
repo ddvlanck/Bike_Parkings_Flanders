@@ -38,18 +38,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fetch = require('isomorphic-fetch');
 var SparqlHttp = require('sparql-http-client');
 var Converter = /** @class */ (function () {
-    function Converter(props) {
-        this.endpoint = new SparqlHttp({ endpointUrl: 'https://data.vlaanderen.be/sparql/' });
+    function Converter() {
         SparqlHttp.fetch = fetch;
     }
     Converter.prototype.resolveAddress = function (streetaddress, postalCode, houseNumber) {
         return __awaiter(this, void 0, void 0, function () {
             var query, result;
-            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (houseNumber === '') {
+                        query = '';
+                        if (houseNumber !== '') {
                             query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
                                 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
                                 'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
@@ -81,7 +80,8 @@ var Converter = /** @class */ (function () {
                                 ' LIMIT 20';
                         }
                         return [4 /*yield*/, new Promise(function (resolve) {
-                                _this.endpoint.selectQuery(query).then(function (res) {
+                                var endpoint = new SparqlHttp({ endpointUrl: 'https://data.vlaanderen.be/sparql/' });
+                                endpoint.selectQuery(query).then(function (res) {
                                     return res.text();
                                 }).then(function (body) {
                                     var result = JSON.parse(body);
@@ -99,3 +99,4 @@ var Converter = /** @class */ (function () {
     };
     return Converter;
 }());
+exports.Converter = Converter;

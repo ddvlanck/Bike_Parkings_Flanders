@@ -1,4 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -36,6 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var JSONLDTemplate_1 = require("./JSONLDTemplate");
+var Converter_1 = require("./Converter");
 var fs = require('fs');
 var xmlReader = require('read-xml');
 var path = require('path');
@@ -43,13 +57,15 @@ var xml2js = require('xml2js');
 var jsonld = require('jsonld');
 var fetch = require('isomorphic-fetch');
 var SparqlHttp = require('sparql-http-client');
-var DatasetGhentConverter = /** @class */ (function () {
+var DatasetGhentConverter = /** @class */ (function (_super) {
+    __extends(DatasetGhentConverter, _super);
     function DatasetGhentConverter(filename) {
-        this.parkingData = {};
+        var _this = _super.call(this) || this;
+        _this.parkingData = {};
         SparqlHttp.fetch = fetch;
-        this.endpoint = new SparqlHttp({ endpointUrl: 'https://data.vlaanderen.be/sparql/' });
         var filePath = path.join(__dirname, filename);
-        this.fileData = fs.readFileSync(filePath, 'ascii');
+        _this.fileData = fs.readFileSync(filePath, 'ascii');
+        return _this;
     }
     DatasetGhentConverter.prototype.parse = function () {
         var _this = this;
@@ -227,44 +243,6 @@ var DatasetGhentConverter = /** @class */ (function () {
         }
         return element;
     };
-    DatasetGhentConverter.prototype.resolveAddress = function (streetaddress, postalCode, houseNumber) {
-        return __awaiter(this, void 0, void 0, function () {
-            var query, result;
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
-                            'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
-                            'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
-                            '\n' +
-                            ' SELECT distinct ?adr WHERE {\n' +
-                            '  ?adr a adres:Adres;\n' +
-                            '       adres:heeftStraatnaam ?str;\n' +
-                            '       adres:heeftPostinfo ?post.\n' +
-                            '  ?str rdfs:label ?strLabel.\n' +
-                            '  filter(STRSTARTS(str(?strLabel),"' + streetaddress + '")).\n' +
-                            '  ?post adres:postcode "' + postalCode + '".\n' +
-                            '  ?adr adres:huisnummer "' + houseNumber + '".\n' +
-                            ' } \n' +
-                            ' LIMIT 20';
-                        return [4 /*yield*/, new Promise(function (resolve) {
-                                _this.endpoint.selectQuery(query).then(function (res) {
-                                    return res.text();
-                                }).then(function (body) {
-                                    var result = JSON.parse(body);
-                                    resolve(result);
-                                }).catch(function (err) {
-                                    console.log(err);
-                                });
-                            })];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, result];
-                }
-            });
-        });
-    };
     return DatasetGhentConverter;
-}());
+}(Converter_1.Converter));
 exports.DatasetGhentConverter = DatasetGhentConverter;

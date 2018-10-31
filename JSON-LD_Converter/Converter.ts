@@ -4,11 +4,9 @@ const fetch = require('isomorphic-fetch');
 const SparqlHttp = require('sparql-http-client');
 
 
-abstract class Converter implements IConverter {
+export abstract class Converter implements IConverter {
 
-    private endpoint = new SparqlHttp({endpointUrl : 'https://data.vlaanderen.be/sparql/'});
-
-    constructor(props) {
+    constructor() {
         SparqlHttp.fetch = fetch;
     }
 
@@ -17,8 +15,8 @@ abstract class Converter implements IConverter {
     abstract parse();
 
     public async resolveAddress(streetaddress: string, postalCode: string, houseNumber?: string) {
-        let query;
-        if(houseNumber === ''){
+        let query = '';
+        if(houseNumber !== ''){
             query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
             'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
             'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
@@ -49,8 +47,10 @@ abstract class Converter implements IConverter {
                 ' LIMIT 20';
         }
 
+
         let result = await new Promise(resolve => {
-            this.endpoint.selectQuery(query).then((res) => {
+            const endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/'});
+            endpoint.selectQuery(query).then((res) => {
                 return res.text();
             }).then(body => {
                 const result = JSON.parse(body);

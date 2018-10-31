@@ -1,5 +1,6 @@
 import {IConverter} from "./IConverter";
 import {JSONLDTemplate} from "./JSONLDTemplate";
+import {Converter} from "./Converter";
 
 const fs = require('fs');
 const xmlReader = require('read-xml');
@@ -10,17 +11,15 @@ const fetch = require('isomorphic-fetch');
 const SparqlHttp = require('sparql-http-client');
 
 
-export class DatasetGhentConverter implements IConverter {
+export class DatasetGhentConverter extends Converter {
     private fileData: string;
 
     private parkingData: { [key: string]: Array<any> } = {};
     private currentID: string;
 
-    private endpoint: any;
-
     constructor(filename: string) {
+        super();
         SparqlHttp.fetch = fetch;
-        this.endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/'});
 
         const filePath = path.join(__dirname, filename);
         this.fileData = fs.readFileSync(filePath, 'ascii');
@@ -164,7 +163,7 @@ export class DatasetGhentConverter implements IConverter {
 
             graph.push(parkingTemplate);
 
-            if(graph.length == Object.keys(this.parkingData).length){
+            if (graph.length == Object.keys(this.parkingData).length) {
                 callback(graph);
             }
 
@@ -186,7 +185,7 @@ export class DatasetGhentConverter implements IConverter {
             "@graph": ""
         }
 
-        this.createGraph( (graph => {
+        this.createGraph((graph => {
             doc['@graph'] = graph;
 
             jsonld.compact(doc, context, (err, compacted) => {
@@ -202,35 +201,6 @@ export class DatasetGhentConverter implements IConverter {
             element = {tag: tagName, value: ""};
         }
         return element;
-    }
-
-    public async resolveAddress(streetaddress: string, postalCode: string, houseNumber: string) {
-        let query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
-            'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
-            'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
-            '\n' +
-            ' SELECT distinct ?adr WHERE {\n' +
-            '  ?adr a adres:Adres;\n' +
-            '       adres:heeftStraatnaam ?str;\n' +
-            '       adres:heeftPostinfo ?post.\n' +
-            '  ?str rdfs:label ?strLabel.\n' +
-            '  filter(STRSTARTS(str(?strLabel),"' + streetaddress + '")).\n' +
-            '  ?post adres:postcode "' + postalCode + '".\n' +
-            '  ?adr adres:huisnummer "' + houseNumber + '".\n' +
-            ' } \n' +
-            ' LIMIT 20';
-
-        let result = await new Promise(resolve => {
-            this.endpoint.selectQuery(query).then((res) => {
-                return res.text();
-            }).then(body => {
-                const result = JSON.parse(body);
-                resolve(result);
-            }).catch(err => {
-                console.log(err);
-            })
-        });
-        return result;
     }
 
 }

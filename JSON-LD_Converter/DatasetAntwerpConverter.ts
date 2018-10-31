@@ -1,4 +1,5 @@
 import {IConverter} from "./IConverter";
+import {Converter} from "./Converter";
 import {JSONLDTemplate} from "./JSONLDTemplate";
 
 const fs = require('fs');
@@ -10,7 +11,7 @@ const fetch = require('isomorphic-fetch');
 const SparqlHttp = require('sparql-http-client');
 
 
-export class DatasetAntwerpConverter implements IConverter {
+export class DatasetAntwerpConverter extends Converter{
     private fileData: string;
 
     /**
@@ -20,12 +21,8 @@ export class DatasetAntwerpConverter implements IConverter {
     private parkingData: { [key: string]: Array<any> } = {};
     private currentID: string;
 
-    private endpoint: any;
-
     constructor(filename: string) {
-        SparqlHttp.fetch = fetch;
-        this.endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/'});
-
+        super();
         const filePath = path.join(__dirname, filename);
         this.fileData = fs.readFileSync(filePath, 'ascii');
     }
@@ -232,35 +229,6 @@ export class DatasetAntwerpConverter implements IConverter {
                 callback(graph);
             }
         });
-    }
-
-    public async resolveAddress(streetaddress: string, postalCode: string, houseNumber: string) {
-        let query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n' +
-            'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
-            'PREFIX adres: <http://data.vlaanderen.be/ns/adres#>\n' +
-            '\n' +
-            ' SELECT distinct ?adr WHERE {\n' +
-            '  ?adr a adres:Adres;\n' +
-            '       adres:heeftStraatnaam ?str;\n' +
-            '       adres:heeftPostinfo ?post.\n' +
-            '  ?str rdfs:label ?strLabel.\n' +
-            '  filter(STRSTARTS(str(?strLabel),"' + streetaddress + '")).\n' +
-            '  ?post adres:postcode "' + postalCode + '".\n' +
-            '  ?adr adres:huisnummer "' + houseNumber + '".\n' +
-            ' } \n' +
-            ' LIMIT 20';
-
-        let result = await new Promise(resolve => {
-            this.endpoint.selectQuery(query).then((res) => {
-                return res.text();
-            }).then(body => {
-                const result = JSON.parse(body);
-                resolve(result);
-            }).catch(err => {
-                console.log(err);
-            })
-        });
-        return result;
     }
 
     private findElement(array: any[], tagName: string): any {
