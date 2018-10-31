@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="OGRGeoJSON" id="OGRGeoJSON">
+	<SimpleField name="OBJECTID" type="int"></SimpleField>
+	<SimpleField name="Uitbater" type="string"></SimpleField>
+	<SimpleField name="Soort" type="string"></SimpleField>
+	<SimpleField name="Adres" type="string"></SimpleField>
+	<SimpleField name="Straat" type="string"></SimpleField>
+	<SimpleField name="Postcode" type="string"></SimpleField>
+	<SimpleField name="District" type="string"></SimpleField>
+	<SimpleField name="Max_Auto" type="int"></SimpleField>
+	<SimpleField name="Max_Motor" type="string"></SimpleField>
+	<SimpleField name="Max_Fiets" type="string"></SimpleField>
+	<SimpleField name="Totaal_Plaatsen" type="int"></SimpleField>
+	<SimpleField name="Eigenaar" type="string"></SimpleField>
+	<SimpleField name="Email" type="string"></SimpleField>
+	<SimpleField name="Telefoon" type="string"></SimpleField>
+	<SimpleField name="Start_date" type="string"></SimpleField>
+	<SimpleField name="GISID" type="string"></SimpleField>
+	<SimpleField name="Contactgegevens" type="string"></SimpleField>
+	<SimpleField name="Link" type="string"></SimpleField>
+	<SimpleField name="NAAM" type="string"></SimpleField>
+	<SimpleField name="GEBRUIK" type="string"></SimpleField>
+</Schema>
+<Folder><name>OGRGeoJSON</name>
+
+  <Placemark>
+  	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+  		<SimpleData name="OBJECTID">2907</SimpleData>
+  		<SimpleData name="Uitbater">MPA</SimpleData>
+  		<SimpleData name="Soort">BP, BFS</SimpleData>
+  		<SimpleData name="Adres">Durletstraat 10, 2018 Antwerpen</SimpleData>
+  		<SimpleData name="Straat">Durletstraat 10</SimpleData>
+  		<SimpleData name="Postcode">2018</SimpleData>
+  		<SimpleData name="District">Antwerpen</SimpleData>
+  		<SimpleData name="Max_Auto">37</SimpleData>
+  		<SimpleData name="Max_Fiets">70</SimpleData>
+  		<SimpleData name="Totaal_Plaatsen">107</SimpleData>
+  		<SimpleData name="Eigenaar">AGSO - Kevin Polfliet</SimpleData>
+  		<SimpleData name="Email">kevin.polfliet@stad.antwerpen.be</SimpleData>
+  		<SimpleData name="Telefoon">03/338 16 59</SimpleData>
+  		<SimpleData name="Start_date">2015-06-01T00:00:00.000Z</SimpleData>
+  		<SimpleData name="GISID">BPPB013</SimpleData>
+  		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+  		<SimpleData name="Link">https://www.antwerpen.be/nl/info/55df0e1caba8a7f98b8b45dd/buurtparking-durletstraat</SimpleData>
+  		<SimpleData name="NAAM">Durletstraat</SimpleData>
+  		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+  	</SchemaData></ExtendedData>
+        <Point><coordinates>4.40435301460225,51.20200426368605</coordinates></Point>
+    </Placemark>
+</Folder>
+</Document></kml>

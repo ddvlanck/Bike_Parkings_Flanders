@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="OGRGeoJSON" id="OGRGeoJSON">
+	<SimpleField name="OBJECTID" type="int"></SimpleField>
+	<SimpleField name="Uitbater" type="string"></SimpleField>
+	<SimpleField name="Soort" type="string"></SimpleField>
+	<SimpleField name="Adres" type="string"></SimpleField>
+	<SimpleField name="Straat" type="string"></SimpleField>
+	<SimpleField name="Postcode" type="string"></SimpleField>
+	<SimpleField name="District" type="string"></SimpleField>
+	<SimpleField name="Max_Auto" type="int"></SimpleField>
+	<SimpleField name="Max_Motor" type="string"></SimpleField>
+	<SimpleField name="Max_Fiets" type="string"></SimpleField>
+	<SimpleField name="Totaal_Plaatsen" type="int"></SimpleField>
+	<SimpleField name="Eigenaar" type="string"></SimpleField>
+	<SimpleField name="Email" type="string"></SimpleField>
+	<SimpleField name="Telefoon" type="string"></SimpleField>
+	<SimpleField name="Start_date" type="string"></SimpleField>
+	<SimpleField name="GISID" type="string"></SimpleField>
+	<SimpleField name="Contactgegevens" type="string"></SimpleField>
+	<SimpleField name="Link" type="string"></SimpleField>
+	<SimpleField name="NAAM" type="string"></SimpleField>
+	<SimpleField name="GEBRUIK" type="string"></SimpleField>
+</Schema>
+<Folder><name>OGRGeoJSON</name>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2887</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Plantinkaai 23, 2000 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Plantinkaai 23</SimpleData>
+		<SimpleData name="Postcode">2000</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">260</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">260</SimpleData>
+		<SimpleData name="Eigenaar">Stad Antwerpen</SimpleData>
+		<SimpleData name="Email">buurtparkeren@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 21 85</SimpleData>
+		<SimpleData name="Start_date">2010-01-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB001</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/548950bcaba8a703318b45f1/</SimpleData>
+		<SimpleData name="NAAM">Hangar 18</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.393939931623558,51.216938339961381</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2888</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Francis Wellesplein 1, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Francis Wellesplein 1</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">60</SimpleData>
+		<SimpleData name="Max_Motor">10</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">70</SimpleData>
+		<SimpleData name="Eigenaar">Stad Antwerpen</SimpleData>
+		<SimpleData name="Email">kirsten.vanbellingen@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 61 13</SimpleData>
+		<SimpleData name="Start_date">2012-03-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB002</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5450c8e3cca8a78b318b45ae/</SimpleData>
+		<SimpleData name="NAAM">Den Bell</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.398875886517096,51.20523931739605</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2889</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Plantin &amp; Moretuslei 106, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Plantin &amp; Moretuslei 106</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">30</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">30</SimpleData>
+		<SimpleData name="Eigenaar">Delhaize</SimpleData>
+		<SimpleData name="Email">hgijsemans@delhaize.be</SimpleData>
+		<SimpleData name="Telefoon">03/232 50 73</SimpleData>
+		<SimpleData name="Start_date">2012-04-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB003</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5450c866b1a8a798548b4606/</SimpleData>
+		<SimpleData name="NAAM">Delhaize Plantin Moretus</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.427460596961873,51.210039934028259</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2890</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Sanderusstraat 70-72, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Sanderusstraat 70-72</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">45</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">45</SimpleData>
+		<SimpleData name="Eigenaar">Regie der Gebouwen</SimpleData>
+		<SimpleData name="Email">Mariehelene.koolen@regiedergebouwen.be</SimpleData>
+		<SimpleData name="Telefoon">03/240 60 18 - 02/541 64 17</SimpleData>
+		<SimpleData name="Start_date">2013-02-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB008</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5451efc0b0a8a7a8678b456d/</SimpleData>
+		<SimpleData name="NAAM">Sanderusstraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.403108954464789,51.206646366655008</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2891</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Rouaansekaai 4, 2000 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Rouaansekaai 4</SimpleData>
+		<SimpleData name="Postcode">2000</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">25</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">25</SimpleData>
+		<SimpleData name="Eigenaar">SD Worx</SimpleData>
+		<SimpleData name="Email">facilities@sdworx.com</SimpleData>
+		<SimpleData name="Telefoon">03 / 220 20 95</SimpleData>
+		<SimpleData name="Start_date">2014-02-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB011</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/54522667afa8a737578b45a6/</SimpleData>
+		<SimpleData name="NAAM">SD Worx Rouaansekaai</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.401579449696468,51.22651864503591</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2892</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Brederodestraat 15, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Brederodestraat 15</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">10</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">10</SimpleData>
+		<SimpleData name="Eigenaar">AVA Papierwaren</SimpleData>
+		<SimpleData name="Email">FrankVanWeddingen@ava.be</SimpleData>
+		<SimpleData name="Telefoon">03/710 52 35  -  0476/719 367</SimpleData>
+		<SimpleData name="Start_date">2014-11-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB012</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5450bd2eaea8a769158b4568/</SimpleData>
+		<SimpleData name="NAAM">AVA Brederode</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.396862705144932,51.206538576436671</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2893</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Lamorinierestraat 227, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Lamorinierestraat 227</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">15</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">15</SimpleData>
+		<SimpleData name="Eigenaar">AGSO - Kevin Polfliet</SimpleData>
+		<SimpleData name="Email">kevin.polfliet@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 16 59</SimpleData>
+		<SimpleData name="Start_date">2015-06-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB015</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/562611c0aaa8a776aa8b4587/buurtparking-lamorinierestraat</SimpleData>
+		<SimpleData name="NAAM">Lamorinierestraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.417630922557138,51.201402829910414</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2894</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Karel Oomsstraat 47, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Karel Oomsstraat 47</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">65</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">65</SimpleData>
+		<SimpleData name="Eigenaar">Albert Heijn Belgie N.V.</SimpleData>
+		<SimpleData name="Email">robert.bosma@ahold.com</SimpleData>
+		<SimpleData name="Telefoon">+31 6 12 993 786</SimpleData>
+		<SimpleData name="Start_date">2016-02-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB016</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5784f2c64b179831766b2704/buurtparking-albert-heijn-karel-oomsstraat</SimpleData>
+		<SimpleData name="NAAM">Albert Heijn Karel Oomsstraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.409040465331129,51.194700256790156</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2895</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Boomgaardstraat 22, 2600 Berchem</SimpleData>
+		<SimpleData name="Straat">Boomgaardstraat 22</SimpleData>
+		<SimpleData name="Postcode">2600</SimpleData>
+		<SimpleData name="District">Berchem</SimpleData>
+		<SimpleData name="Max_Auto">5</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">5</SimpleData>
+		<SimpleData name="Eigenaar">Provincie Antwerpen</SimpleData>
+		<SimpleData name="Email">Youssef.ELMORABITI@provincieantwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">0476/505 412 - 03/240 62 88</SimpleData>
+		<SimpleData name="Start_date">2016-03-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB017</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/578502933d96a42dc3638629/buurtparking-huis-van-de-sport</SimpleData>
+		<SimpleData name="NAAM">Huis van de Sport Boomgaardstraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.416834052185063,51.199431524841543</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2896</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Brusselstraat 45, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Brusselstraat 45</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">40</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">40</SimpleData>
+		<SimpleData name="Eigenaar">Karel de Grote Hogeschool</SimpleData>
+		<SimpleData name="Email">Alain.Musing@KdG.be</SimpleData>
+		<SimpleData name="Telefoon">03/613 11 86</SimpleData>
+		<SimpleData name="Start_date">2016-12-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB018</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/583c292f375551fb864ec6d0/buurtparking-kdg-brusselstraat</SimpleData>
+		<SimpleData name="NAAM">KDG Brusselstraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.390260816939043,51.202423178405908</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2897</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Jan Van Rijswijcklaan - Populierenlaan, 2610 Wilrijk</SimpleData>
+		<SimpleData name="Straat">Jan Van Rijswijcklaan - Populierenlaan</SimpleData>
+		<SimpleData name="Postcode">2610</SimpleData>
+		<SimpleData name="District">Wilrijk</SimpleData>
+		<SimpleData name="Max_Auto">195</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">195</SimpleData>
+		<SimpleData name="Eigenaar">Stad Antwerpen</SimpleData>
+		<SimpleData name="Email">buurtparkeren@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 21 85</SimpleData>
+		<SimpleData name="Start_date">2013-01-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB019</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/54886075cca8a7f8588b4799/</SimpleData>
+		<SimpleData name="NAAM">P+R Olympiade</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.391583476601095,51.183956259991888</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2898</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Anjelierstraat, 2600 Berchem</SimpleData>
+		<SimpleData name="Straat">Anjelierstraat - Uitbreidingstraat</SimpleData>
+		<SimpleData name="Postcode">2600</SimpleData>
+		<SimpleData name="District">Berchem</SimpleData>
+		<SimpleData name="Max_Auto">50</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">50</SimpleData>
+		<SimpleData name="Eigenaar">Zorgbedrijf</SimpleData>
+		<SimpleData name="Email">alain.eyckens@zorgbedrijf.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/285 30 01</SimpleData>
+		<SimpleData name="Start_date">2017-07-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB021</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5943beaab4ce556e384cd2a5/buurtparking-anjelierstraat</SimpleData>
+		<SimpleData name="NAAM">Anjelierstraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.426245469159858,51.195397478269363</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2899</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Carel Van Manderstraat, 2050 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Carel Van Manderstraat</SimpleData>
+		<SimpleData name="Postcode">2050</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">124</SimpleData>
+		<SimpleData name="Max_Motor">18</SimpleData>
+		<SimpleData name="Max_Fiets">20</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">162</SimpleData>
+		<SimpleData name="Eigenaar">CVBA Woonhaven Antwerpen</SimpleData>
+		<SimpleData name="Email">anneke.raes@woonhaven.be</SimpleData>
+		<SimpleData name="Telefoon">03/213 67 52</SimpleData>
+		<SimpleData name="Start_date">2012-09-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB004</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5450e185cda8a76c588b459a/</SimpleData>
+		<SimpleData name="NAAM">Europark</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.383660701465688,51.22387871066352</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2900</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Frans Van Hombeeckplein, 2600 Berchem</SimpleData>
+		<SimpleData name="Straat">Frans Van Hombeeckplein</SimpleData>
+		<SimpleData name="Postcode">2600</SimpleData>
+		<SimpleData name="District">Berchem</SimpleData>
+		<SimpleData name="Max_Auto">100</SimpleData>
+		<SimpleData name="Max_Fiets">70</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">170</SimpleData>
+		<SimpleData name="Eigenaar">Stad Antwerpen</SimpleData>
+		<SimpleData name="Email">buurtparkeren@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 21 85</SimpleData>
+		<SimpleData name="Start_date">2013-04-24T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB010</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/54885b28aaa8a7754c8b46d2/</SimpleData>
+		<SimpleData name="NAAM">Vijfhoek</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.417623087907343,51.195228941012424</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2901</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Gasstraat 56, 2060 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Gasstraat 56</SimpleData>
+		<SimpleData name="Postcode">2060</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">40</SimpleData>
+		<SimpleData name="Max_Motor">5</SimpleData>
+		<SimpleData name="Max_Fiets">24</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">69</SimpleData>
+		<SimpleData name="Eigenaar">NIKA nv</SimpleData>
+		<SimpleData name="Email">pj@celis.be</SimpleData>
+		<SimpleData name="Telefoon">0475/781 698</SimpleData>
+		<SimpleData name="Start_date">2013-04-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB009</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5450e327caa8a7ab2c8b4577/</SimpleData>
+		<SimpleData name="NAAM">Gasstraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.425009425002922,51.225257777461181</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2902</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Grote Steenweg 150, 2600 Berchem</SimpleData>
+		<SimpleData name="Straat">Grote Steenweg 150</SimpleData>
+		<SimpleData name="Postcode">2600</SimpleData>
+		<SimpleData name="District">Berchem</SimpleData>
+		<SimpleData name="Max_Auto">5</SimpleData>
+		<SimpleData name="Max_Motor">2</SimpleData>
+		<SimpleData name="Max_Fiets">10</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">17</SimpleData>
+		<SimpleData name="Eigenaar">Stad Antwerpen</SimpleData>
+		<SimpleData name="Email">kirsten.vanbellingen@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 61 13</SimpleData>
+		<SimpleData name="Start_date">2012-09-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB005</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5450c734aaa8a70d2c8b456e/</SimpleData>
+		<SimpleData name="NAAM">Districtshuis Berchem</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.419692070225071,51.195224929832811</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2903</SimpleData>
+		<SimpleData name="Uitbater">Q-Park NV</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Waalsekaai, 2000 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Waalsekaai, zone Kooldok</SimpleData>
+		<SimpleData name="Postcode">2000</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">150</SimpleData>
+		<SimpleData name="Max_Fiets">125</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">275</SimpleData>
+		<SimpleData name="Eigenaar">Q-Park NV</SimpleData>
+		<SimpleData name="GISID">BPPB022</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="GEBRUIK">gepland</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.392004662913124,51.211486912074797</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2904</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Grote Steenweg 224, 2600 Berchem</SimpleData>
+		<SimpleData name="Straat">Grote Steenweg 224</SimpleData>
+		<SimpleData name="Postcode">2600</SimpleData>
+		<SimpleData name="District">Berchem</SimpleData>
+		<SimpleData name="Max_Auto">25</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">25</SimpleData>
+		<SimpleData name="Eigenaar">Stad Antwerpen</SimpleData>
+		<SimpleData name="Email">buurtparkeren@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 21 85 
+</SimpleData>
+		<SimpleData name="GISID">BPPB020</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/583c2543b84e117e28428195/buurtparking-grote-steenweg-224</SimpleData>
+		<SimpleData name="NAAM">Winterthur Grote Steenweg 224</SimpleData>
+		<SimpleData name="GEBRUIK">gepland</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.427231099570241,51.188403282045613</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2905</SimpleData>
+		<SimpleData name="Uitbater">Q-Park NV</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Waalsekaai, 2000 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Waalsekaai, zone Steendok</SimpleData>
+		<SimpleData name="Postcode">2000</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">100</SimpleData>
+		<SimpleData name="Max_Fiets">50</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">150</SimpleData>
+		<SimpleData name="Eigenaar">Q-Park NV</SimpleData>
+		<SimpleData name="GISID">BPPB023</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="GEBRUIK">gepland</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.387353545529034,51.207758756873289</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2906</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Mellaertsstraat 5-9, 2140 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Mellaertsstraat 5-9</SimpleData>
+		<SimpleData name="Postcode">2140</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">36</SimpleData>
+		<SimpleData name="Max_Fiets">52</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">88</SimpleData>
+		<SimpleData name="Eigenaar">Stad Antwerpen</SimpleData>
+		<SimpleData name="Email">buurtparkeren@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 21 85</SimpleData>
+		<SimpleData name="GISID">BPPB024</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="GEBRUIK">gepland</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.434710424923692,51.213769814825611</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2907</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP, BFS</SimpleData>
+		<SimpleData name="Adres">Durletstraat 10, 2018 Antwerpen</SimpleData>
+		<SimpleData name="Straat">Durletstraat 10</SimpleData>
+		<SimpleData name="Postcode">2018</SimpleData>
+		<SimpleData name="District">Antwerpen</SimpleData>
+		<SimpleData name="Max_Auto">37</SimpleData>
+		<SimpleData name="Max_Fiets">70</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">107</SimpleData>
+		<SimpleData name="Eigenaar">AGSO - Kevin Polfliet</SimpleData>
+		<SimpleData name="Email">kevin.polfliet@stad.antwerpen.be</SimpleData>
+		<SimpleData name="Telefoon">03/338 16 59</SimpleData>
+		<SimpleData name="Start_date">2015-06-01T00:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB013</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@stad.antwerpen.be - 03/338 21 85</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/55df0e1caba8a7f98b8b45dd/buurtparking-durletstraat</SimpleData>
+		<SimpleData name="NAAM">Durletstraat</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.40435301460225,51.20200426368605</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="OBJECTID">2908</SimpleData>
+		<SimpleData name="Uitbater">MPA</SimpleData>
+		<SimpleData name="Soort">BP</SimpleData>
+		<SimpleData name="Adres">Borsbeeksebrug 22, 2600 Berchem</SimpleData>
+		<SimpleData name="Straat">Borsbeeksebrug 22</SimpleData>
+		<SimpleData name="Postcode">2600</SimpleData>
+		<SimpleData name="District">Berchem</SimpleData>
+		<SimpleData name="Max_Auto">40</SimpleData>
+		<SimpleData name="Totaal_Plaatsen">40</SimpleData>
+		<SimpleData name="Eigenaar">Iret Development</SimpleData>
+		<SimpleData name="Email">postx@besixpark.com</SimpleData>
+		<SimpleData name="Start_date">2018-02-28T23:00:00.000Z</SimpleData>
+		<SimpleData name="GISID">BPPB022</SimpleData>
+		<SimpleData name="Contactgegevens">buurtparkeren@mpa.antwerpen.be</SimpleData>
+		<SimpleData name="Link">https://www.antwerpen.be/nl/info/5a8da1322382a561d646a280/buurtparking-post-x</SimpleData>
+		<SimpleData name="NAAM">Post X</SimpleData>
+		<SimpleData name="GEBRUIK">bestaand</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>4.435039264253564,51.200895400268656</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>
