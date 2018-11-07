@@ -47,7 +47,7 @@ export abstract class Converter implements IConverter {
 
 
         let result = await new Promise(resolve => {
-            const endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/'});
+            const endpoint = new SparqlHttp({endpointUrl: 'https://data.vlaanderen.be/sparql/', headers :{ Origin : 'dwight.vanlancker@UGent.be'}});
             endpoint.selectQuery(query).then((res) => {
                 return res.json();
             }).then(body => {
